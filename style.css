@@ -394,7 +394,7 @@ body {
 }
 .modal-save:hover { background: #1070c0; }
 
-/* Saved flash on modal save */
+
 .modal-save.saved {
   background: #1D9E75;
 }

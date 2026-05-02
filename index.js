@@ -269,7 +269,5 @@ document.getElementById("modalSave").addEventListener("click", function () {
 
   showToast("Timer settings saved!");
 });
-
-// ── Init ──
 updateDisplay();
 updateDots();

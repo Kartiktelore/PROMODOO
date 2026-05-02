@@ -15,7 +15,8 @@ setInterval(() => {
   i = (i + 1) % colors.length;
 }, 1500);
 
-
+let audio = new Audio("https://www.soundjay.com/button/beep-07.wav");
+audio.play();
 
 function updateDisplay() {
   let minutes = Math.floor(time / 60);

@@ -1,65 +1,123 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Pomodoro Timer</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
+  
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 class="modal-title">⏱ Set Timers</h2>
+        <button class="modal-close" id="modalClose">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-field">
+          <label>Focus Duration (minutes)</label>
+          <div class="modal-stepper">
+            <button class="step-btn" onclick="step('workMin', -1)">−</button>
+            <input type="number" id="workMin" value="25" min="1" max="120" />
+            <button class="step-btn" onclick="step('workMin', 1)">+</button>
+          </div>
+        </div>
+        <div class="modal-field">
+          <label>Short Break (minutes)</label>
+          <div class="modal-stepper">
+            <button class="step-btn" onclick="step('shortBreakMin', -1)">−</button>
+            <input type="number" id="shortBreakMin" value="5" min="1" max="60" />
+            <button class="step-btn" onclick="step('shortBreakMin', 1)">+</button>
+          </div>
+        </div>
+        <div class="modal-field">
+          <label>Long Break (minutes)</label>
+          <div class="modal-stepper">
+            <button class="step-btn" onclick="step('longBreakMin', -1)">−</button>
+            <input type="number" id="longBreakMin" value="15" min="1" max="120" />
+            <button class="step-btn" onclick="step('longBreakMin', 1)">+</button>
+          </div>
+        </div>
+        <div class="modal-field">
+          <label>Long Break After (sessions)</label>
+          <div class="modal-stepper">
+            <button class="step-btn" onclick="step('longBreakAfter', -1)">−</button>
+            <input type="number" id="longBreakAfter" value="4" min="1" max="10" />
+            <button class="step-btn" onclick="step('longBreakAfter', 1)">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="modal-cancel" id="modalCancel">Cancel</button>
+        <button class="modal-save" id="modalSave">Save Settings</button>
+      </div>
+    </div>
+  </div>
+
+  
   <div class="layout">
 
     
-    <div class="todo panel">
-      <h3>📝 To-Do List</h3>
+    <div class="panel todo">
+      <h3>TASKS</h3>
       <div class="todo-input-row">
-        <input type="text" id="taskInput" placeholder="Enter task..." onkeydown="if(event.key==='Enter') addTask()">
+        <input type="text" id="taskInput" placeholder="Add a task…" onkeydown="if(event.key==='Enter') addTask()" />
         <button onclick="addTask()">Add</button>
       </div>
       <ul id="taskList"></ul>
     </div>
 
-
+    
     <div class="container">
-      <h1 class="header" id="header">POMODORO</h1>
+      <div class="header">POMODORO</div>
 
       <div class="mode-buttons">
-        <button class="mode-btn active" id="btn-work" onclick="setMode('work')">Work · 25m</button>
-        <button class="mode-btn" id="btn-short" onclick="setMode('short')">Short Break · 5m</button>
-        <button class="mode-btn" id="btn-long" onclick="setMode('long')">Long Break · 15m</button>
+        <button class="mode-btn active" id="btn-work"       onclick="setMode('work')">Focus</button>
+        <button class="mode-btn"        id="btn-shortBreak" onclick="setMode('shortBreak')">Short Break</button>
+        <button class="mode-btn"        id="btn-longBreak"  onclick="setMode('longBreak')">Long Break</button>
       </div>
 
       <div class="ring-wrap">
         <svg width="240" height="240" viewBox="0 0 240 240">
-          <circle cx="120" cy="120" r="104" fill="none" stroke="#2a2a2a" stroke-width="10"/>
-          <circle id="progress-ring" cx="120" cy="120" r="104" fill="none"
-            stroke="#E24B4A" stroke-width="10" stroke-linecap="round"
-            stroke-dasharray="653.45" stroke-dashoffset="0"
+          <circle cx="120" cy="120" r="108" fill="none" stroke="#222" stroke-width="10"/>
+          <circle id="progress-ring" cx="120" cy="120" r="108" fill="none"
+            stroke="#E24B4A" stroke-width="10"
+            stroke-linecap="round"
+            stroke-dasharray="678.58"
+            stroke-dashoffset="0"
             transform="rotate(-90 120 120)"/>
         </svg>
         <div class="ring-center">
           <div class="timer-display" id="timer-display">25:00</div>
-          <div class="mode-label" id="mode-label">Focus Time</div>
+          <div class="mode-label"   id="mode-label">Focus Time</div>
         </div>
       </div>
 
       <div class="controls">
-        <button class="ctrl-btn" onclick="resetTimer()">Reset</button>
         <button class="ctrl-btn primary" id="start-pause-btn" onclick="toggleTimer()">Start</button>
+        <button class="ctrl-btn"                               onclick="resetTimer()">Reset</button>
+        <button class="ctrl-btn set-btn"                       onclick="openModal()">⚙ Set</button>
       </div>
 
       <div class="sessions">
-        <p>Sessions Completed: <strong id="session-count">0</strong></p>
+        Sessions: <strong id="session-count">0</strong>
+      </div>
+      <div class="dots" id="dots">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
       </div>
 
       <div class="toast" id="toast"></div>
     </div>
 
     
-    <div class="history panel">
-      <h3>📋 Session History</h3>
-      <ul id="historyList"></ul>
+    <div class="panel history">
+      <h3>HISTORY</h3>
+      <ul id="historyList"><li class="history-empty">No sessions yet</li></ul>
     </div>
 
   </div>

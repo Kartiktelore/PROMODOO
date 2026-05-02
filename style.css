@@ -1,7 +1,7 @@
 body {
   font-family: Arial;
   background-image: "https://www.istockphoto.com/photo/white-recycled-craft-paper-texture-as-background-gm2206710454-624007570?utm_source=unsplash&utm_medium=affiliate&utm_campaign=srp_photos_bottom&utm_content=https%3A%2F%2Funsplash.com%2Fs%2Fphotos%2Fbackground-image&utm_term=background+image%3A%3Aaffiliate-layout-optim%3Aa%3Ab0ac7ea9-e959-4bb3-aa59-061e318fb1c5";
-  color: aqua;
+  
   text-align: center;
 }
 
@@ -28,8 +28,7 @@ button {
   padding: 10px 20px;
   margin: 5px;
   border: none;
-  background: #00adb5;
-  color: white;
+  
   cursor: pointer;
   border-radius: 5px;
 }
@@ -43,15 +42,7 @@ button:hover {
     height: 800px;
     width:700px;
 }
-.blue{
-    color:aqua;
-}
-.yellow{
-    color:yellow;
-}
-.green{
-    color: greenyellow;
-}
+
 .Header{
     font-size: 60px;
     font-weight: bold;
